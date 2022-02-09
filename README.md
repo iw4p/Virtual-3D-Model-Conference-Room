@@ -28,7 +28,7 @@ For socket server:
 ```sh
 $ npm run server
 ```
-For running client and serv front:
+For running client website:
 ```sh
 $ npm run client
 ```

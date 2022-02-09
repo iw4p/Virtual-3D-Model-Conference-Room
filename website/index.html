@@ -242,7 +242,7 @@
 
 <script type="text/javascript">
 
-    let socket_ip = 'https://192.168.0.1:3001';
+    let socket_ip = 'https://192.168.0.120:3001';
 
     const socket = io(socket_ip);
 
@@ -260,14 +260,14 @@
                 //"urls": "stun:stun.l.google.com:19302"
                 "urls": "stun:stun1.l.google.com:19302"
             },
-            {
-                urls: [
-                    'turn:*Your Turn Server Ip Address*:3478?transport=udp',
-                    'turn:*Your Turn Server Ip Address*:3478?transport=tcp'
-                ],
-                username: 'test',
-                credential: 'test123'
-            }
+            //{
+            //    urls: [
+            //      'turn:*Your Turn Server Ip Address*:3478?transport=udp',
+            //      'turn:*Your Turn Server Ip Address*:3478?transport=tcp'
+            //  ],
+            //  username: 'test',
+            //  credential: 'test123'
+            //}
         ]
     }
     let constraints = {

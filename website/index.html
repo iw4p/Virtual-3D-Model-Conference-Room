@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link rel="icon" type="image/png" href="assets/images/favicon.ico">
+
+    <title>Virtual 3D Model Conference Room</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="o3dv/main.css">
+
+    <link href="o3dv/utilities/treeview/treeview.0.2.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Modal -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
+
+    <!-- libs start -->
+    <script type="text/javascript" src="./libs/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./libs/pickr.monolith.min-1.8.2.css">
+    <script type="text/javascript" src="./libs/pickr.es5.min-1.8.2.js"></script>
+    <script type="text/javascript" src="./libs/three.min.js"></script>
+    <!-- libs end -->
+
+    <!-- meta start -->
+    <!-- meta end -->
+
+    <!-- engine start -->
+    <script type="text/javascript" src="./source/core/core.js"></script>
+    <script type="text/javascript" src="./source/core/taskrunner.js"></script>
+    <script type="text/javascript" src="./source/geometry/geometry.js"></script>
+    <script type="text/javascript" src="./source/geometry/coord2d.js"></script>
+    <script type="text/javascript" src="./source/geometry/coord3d.js"></script>
+    <script type="text/javascript" src="./source/geometry/quaternion.js"></script>
+    <script type="text/javascript" src="./source/geometry/box3d.js"></script>
+    <script type="text/javascript" src="./source/geometry/octree.js"></script>
+    <script type="text/javascript" src="./source/geometry/matrix.js"></script>
+    <script type="text/javascript" src="./source/geometry/transformation.js"></script>
+    <script type="text/javascript" src="./source/geometry/tween.js"></script>
+    <script type="text/javascript" src="./source/io/binaryreader.js"></script>
+    <script type="text/javascript" src="./source/io/binarywriter.js"></script>
+    <script type="text/javascript" src="./source/io/textwriter.js"></script>
+    <script type="text/javascript" src="./source/io/bufferutils.js"></script>
+    <script type="text/javascript" src="./source/io/fileutils.js"></script>
+    <script type="text/javascript" src="./source/io/externallibs.js"></script>
+    <script type="text/javascript" src="./source/model/material.js"></script>
+    <script type="text/javascript" src="./source/model/triangle.js"></script>
+    <script type="text/javascript" src="./source/model/property.js"></script>
+    <script type="text/javascript" src="./source/model/element.js"></script>
+    <script type="text/javascript" src="./source/model/mesh.js"></script>
+    <script type="text/javascript" src="./source/model/meshbuffer.js"></script>
+    <script type="text/javascript" src="./source/model/node.js"></script>
+    <script type="text/javascript" src="./source/model/model.js"></script>
+    <script type="text/javascript" src="./source/model/topology.js"></script>
+    <script type="text/javascript" src="./source/model/modelutils.js"></script>
+    <script type="text/javascript" src="./source/model/modelfinalization.js"></script>
+    <script type="text/javascript" src="./source/model/quantities.js"></script>
+    <script type="text/javascript" src="./source/model/generator.js"></script>
+    <script type="text/javascript" src="./source/import/importerutils.js"></script>
+    <script type="text/javascript" src="./source/import/importerbase.js"></script>
+    <script type="text/javascript" src="./source/import/importerobj.js"></script>
+    <script type="text/javascript" src="./source/import/importerstl.js"></script>
+    <script type="text/javascript" src="./source/import/importeroff.js"></script>
+    <script type="text/javascript" src="./source/import/importerply.js"></script>
+    <script type="text/javascript" src="./source/import/importer3ds.js"></script>
+    <script type="text/javascript" src="./source/import/importergltf.js"></script>
+    <script type="text/javascript" src="./source/import/importero3dv.js"></script>
+    <script type="text/javascript" src="./source/import/importerthree.js"></script>
+    <script type="text/javascript" src="./source/import/importer3dm.js"></script>
+    <script type="text/javascript" src="./source/import/importerifc.js"></script>
+    <script type="text/javascript" src="./source/import/filelist.js"></script>
+    <script type="text/javascript" src="./source/import/importer.js"></script>
+    <script type="text/javascript" src="./source/export/exporterbase.js"></script>
+    <script type="text/javascript" src="./source/export/exporterobj.js"></script>
+    <script type="text/javascript" src="./source/export/exporterstl.js"></script>
+    <script type="text/javascript" src="./source/export/exporterply.js"></script>
+    <script type="text/javascript" src="./source/export/exporteroff.js"></script>
+    <script type="text/javascript" src="./source/export/exportergltf.js"></script>
+    <script type="text/javascript" src="./source/export/exporter3dm.js"></script>
+    <script type="text/javascript" src="./source/export/exporter.js"></script>
+    <script type="text/javascript" src="./source/threejs/threeutils.js"></script>
+    <script type="text/javascript" src="./source/threejs/threeconverter.js"></script>
+    <script type="text/javascript" src="./source/threejs/threemodelloader.js"></script>
+    <script type="text/javascript" src="./source/parameters/parameterlist.js"></script>
+    <script type="text/javascript" src="./source/viewer/domutils.js"></script>
+    <script type="text/javascript" src="./source/viewer/navigation.js"></script>
+    <script type="text/javascript" src="./source/viewer/viewer.js"></script>
+    <script type="text/javascript" src="./source/viewer/domviewer.js"></script>
+    <!-- engine end -->
+
+    <!-- website start -->
+    <link rel="stylesheet" type="text/css" href="o3dv/css/icons.css">
+    <link rel="stylesheet" type="text/css" href="o3dv/css/themes.css">
+    <link rel="stylesheet" type="text/css" href="o3dv/css/core.css">
+    <link rel="stylesheet" type="text/css" href="o3dv/css/controls.css">
+    <link rel="stylesheet" type="text/css" href="o3dv/css/dialogs.css">
+    <link rel="stylesheet" type="text/css" href="o3dv/css/treeview.css">
+    <link rel="stylesheet" type="text/css" href="o3dv/css/website.css">
+    <link rel="stylesheet" type="text/css" href="o3dv/css/embed.css">
+    <script type="text/javascript" src="o3dv/js/featureset.js"></script>
+    <script type="text/javascript" src="o3dv/js/eventhandler.js"></script>
+    <script type="text/javascript" src="o3dv/js/utils.js"></script>
+    <script type="text/javascript" src="o3dv/js/cookies.js"></script>
+    <script type="text/javascript" src="o3dv/js/settings.js"></script>
+    <script type="text/javascript" src="o3dv/js/toolbar.js"></script>
+    <script type="text/javascript" src="o3dv/js/treeview.js"></script>
+    <script type="text/javascript" src="o3dv/js/modal.js"></script>
+    <script type="text/javascript" src="o3dv/js/dialogs.js"></script>
+    <script type="text/javascript" src="o3dv/js/openurldialog.js"></script>
+    <script type="text/javascript" src="o3dv/js/exportdialog.js"></script>
+    <script type="text/javascript" src="o3dv/js/cookiedialog.js"></script>
+    <script type="text/javascript" src="o3dv/js/socketdialog.js"></script>
+    <script type="text/javascript" src="o3dv/js/askpermissiondialog.js"></script>
+    <script type="text/javascript" src="o3dv/js/modeldata.js"></script>
+    <script type="text/javascript" src="o3dv/js/navigator.js"></script>
+    <script type="text/javascript" src="o3dv/js/sidebarpanel.js"></script>
+    <script type="text/javascript" src="o3dv/js/detailssidebarpanel.js"></script>
+    <script type="text/javascript" src="o3dv/js/settingssidebarpanel.js"></script>
+    <script type="text/javascript" src="o3dv/js/sidebar.js"></script>
+    <script type="text/javascript" src="o3dv/js/hashhandler.js"></script>
+    <script type="text/javascript" src="o3dv/js/loader.js"></script>
+    <script type="text/javascript" src="o3dv/js/themehandler.js"></script>
+    <script type="text/javascript" src="o3dv/js/website.js"></script>
+    <script type="text/javascript" src="o3dv/js/embed.js"></script>
+
+    <script type="text/javascript" src="o3dv/main.js"></script>
+    <script type="text/javascript" src="o3dv/utils.js"></script>
+    <script type="text/javascript" src="o3dv/roomManagement.js"></script>
+    <script type="text/javascript" src="o3dv/treelistbuttons.js"></script>
+    <script type="text/javascript" src="o3dv/androidfuncs.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js"
+            integrity="sha512-2RDFHqfLZW8IhPRvQYmK9bTLfj/hddxGXQAred2wNZGkrKQkLGj8RCkXfRJPHlDerdHHIzTFaahq4s/P4V6Qig=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.0/simplepeer.min.js"
+            integrity="sha512-0f7Ahsuvr+/P2btTY4mZIw9Vl23lS6LY/Y7amdkmUg2dqsUF+cTe4QjWvj/NIBHJoGksOiqndKQuI9yzn2hB0g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+
+    <!-- website end -->
+
+    <!-- externals start -->
+    <script type="text/javascript">
+        OV.ExternalLibLocation = './libs';
+    </script>
+    <!-- externals end -->
+
+    <!-- analytics start -->
+    <!-- analytics end -->
+
+    <style>
+        .column {
+            float: left;
+            width: 33.33%;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="arrow" style="display: none; position: fixed"></div>
+
+<div id="videos" style="display: none;" class="container">
+    <audio id="localVideo" class="vid" playsinline autoplay muted></audio>
+</div>
+
+<div class="popup" style="background-color: black">
+    <header>
+        <span>Join Room</span>
+        <div class="close"><i class="uil uil-times"></i></div>
+    </header>
+
+    <div class="content">
+        <p>Please enter your name</p>
+        <div class="field" style="padding: 5px">
+            <i class="url-icon uil uil-text-fields"></i>
+            <input type="text" id="name-field" style="background-color: black; color: white">
+            <button id="Enter-btn">Enter</button>
+        </div>
+    </div>
+
+    <div class="content">
+        <p>copy link</p>
+        <div class="field" style="padding: 5px">
+            <i class="url-icon uil uil-link"></i>
+            <input type="text" readonly value="example.com/share-link" id="share-url"
+                   style="background-color: black; color: white">
+            <button id="copy-btn">Copy</button>
+        </div>
+    </div>
+</div>
+
+<div class="header" id="header">
+    <div class="toolbar" id="toolbar"></div>
+</div>
+
+<div class="main row" id="main">
+    <div class="column main_sidebar only_full_width" id="main_sidebar">
+    </div>
+    <div class="column main_navigator only_full_width" id="main_navigator" style="display: none">
+        <ul id="TreeView">
+            <li>Test Module
+                <ul>
+                    <li onclick="getPaging(this.id)" id="Tester_Case" style="cursor: pointer">
+                        Tester Case
+                    </li>
+                    <li onclick="getPaging(this.id)" id="Module_BI" style="cursor: pointer">
+                        Module BI
+                    </li>
+                    <li onclick="getPaging(this.id)" id="Tester_Module_PS" style="cursor: pointer">
+                        Tester Module PS
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="column main_viewer" id="main_viewer">
+    </div>
+</div>
+
+<div id="chat" class="footer" style="display: none; z-index: 10">
+    <div id="chat-logs-input" class="chat-logs" style="padding-bottom: 70px">
+    </div>
+    <div class="chat-input">
+        <input type="text" id="chat-input" placeholder="Send a message..."/>
+        <button type="submit" class="chat-submit" id="chat-submit" style="display: inline-flex; align-items: center">
+            <span id='chat-comment' class="material-icons" style='margin-right: 5px'>comment</span>
+            <i id="chat-send" class="material-icons">send</i></button>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    let socket_ip = 'https://192.168.0.1:3001';
+
+    const socket = io(socket_ip);
+
+    let stream = null;
+    let call = {};
+    let callEnded = false;
+    let callAccepted = false;
+    let connectionRef = null;
+
+    let localStream = null;
+    let peers = []
+    const configuration = {
+        "iceServers": [
+            {
+                //"urls": "stun:stun.l.google.com:19302"
+                "urls": "stun:stun1.l.google.com:19302"
+            },
+            {
+                urls: [
+                    'turn:*Your Turn Server Ip Address*:3478?transport=udp',
+                    'turn:*Your Turn Server Ip Address*:3478?transport=tcp'
+                ],
+                username: 'test',
+                credential: 'test123'
+            }
+        ]
+    }
+    let constraints = {
+        audio: true,
+        video: false
+        /*{
+            width: {
+                max: 300
+            },
+            height: {
+                max: 300
+            }
+        }*/
+    }
+
+    let roomID = null;
+    let userName = null;
+    let isJoinedInsideRoom = false;
+    let mySocketID = null;
+
+    roomID = roomIDParamHandler('room');
+
+    $(window).on('load', function () {
+
+        if ((roomID === null) || (roomID === undefined) || (roomID === '')) {
+            roomID = randomNumber(9);
+            history.pushState(null, '', '?room=' + roomID);
+        }
+
+        let website = new OV.Website({
+            socket: socket,
+            headerDiv: $('#header'),
+            toolbarDiv: $('#toolbar'),
+            mainDiv: $('#main'),
+            introDiv: $('#intro'),
+            navigatorDiv: $('#main_navigator'),
+            sidebarDiv: $('#main_sidebar'),
+            viewerDiv: $('#main_viewer'),
+            // fileInput: $('#open_file'),
+            // eventHandler: window.gtagEventHandler,
+        });
+
+        website.Load();
+
+        // var from treelistbuttons.js
+        website_ = website;
+
+        /**
+         * Creates a new peer connection and sets the event listeners
+         * @param {String} socket_id
+         *                 ID of the peer
+         * @param {Boolean} am_initiator
+         *                  Set to true if the peer initiates the connection process.
+         *                  Set to false if the peer receives the connection.
+         */
+        function addPeer(socket_id, am_initiator) {
+            peers[socket_id] = new SimplePeer({
+                initiator: am_initiator,
+                stream: localStream,
+                config: configuration,
+                // trickle: false
+            })
+
+            peers[socket_id].on('signal', data => {
+                socket.emit('signal', {
+                    signal: data,
+                    socket_id: socket_id,
+                    room: roomID
+                })
+            })
+
+            peers[socket_id].on('stream', stream => {
+                let newVid = document.createElement('audio')
+                newVid.srcObject = stream
+                newVid.id = socket_id
+                newVid.playsinline = true
+                newVid.autoplay = true
+                newVid.className = "vid"
+                // newVid.onclick = () => openPictureMode(newVid)
+                // newVid.ontouchstart = (e) => openPictureMode(newVid)
+                videos.appendChild(newVid)
+            })
+        }
+
+        function init() {
+            socket.on('initReceive', socket_id => {
+                addPeer(socket_id, false);
+                socket.emit('initSend', socket_id, roomID);
+            });
+
+            socket.on('initSend', socket_id => {
+                addPeer(socket_id, true);
+            });
+
+            socket.on('signal', data => {
+                if (roomID == data.room) {
+                    peers[data.socket_id].signal(data.signal);
+                }
+            });
+
+            socket.on('chat', (user, msg) => {
+                msg = user + ": " + msg;
+                generate_message(msg, user);
+                $('#chat-logs-input').css("display", "revert");
+            });
+
+            socket.on('join', (room, username) => {
+                let msg = username + " wants to join to the room";
+                generate_message(msg, username);
+                $('#chat-logs-input').css("display", "revert");
+                sendMessageToAndroid(msg);
+            });
+
+            socket.on('leave', (room, username) => {
+                isJoinedInsideRoom = false;
+                let msg = username + " left the room";
+                generate_message(msg, username);
+                $('#chat-logs-input').css("display", "revert");
+                $('.ov_dialog').remove();
+                $('.arrow').css("display", "none");
+            });
+
+            socket.on('removeAll', (room, username) => {
+                isJoinedInsideRoom = false;
+                let msg = "admin close the " + room + " room";
+                generate_message(msg, username);
+                $('#chat-logs-input').css("display", "revert");
+                leaveRoomFunc1();
+                $('.ov_dialog').remove();
+                //$(".arrow").hide();
+                $('.arrow').css("display", "none");
+            });
+
+            socket.on('askPermission', (room, username, socketID) => {
+                OV.ShowAskPermissionDialog(room, username, socketID);
+            });
+
+            socket.on('permissionDenied', () => {
+                $('#joinRoom').show();
+                $('#leaveRoom').hide();
+                OV.ShowAskDeniedPermissionDialog();
+            });
+
+            socket.on('askPending', () => {
+                $('#leaveRoom').text("Pending!!!");
+                $('#leaveRoom').css('background-color', '#FF5722');
+                sendMessageToAndroid("Pending...");
+            });
+        }
+
+        socket.on('loadModel', (model) => {
+            website.LoadModel(model);
+        });
+
+        socket.on('newJoined', (status, socketID) => {
+            if (status == true) {
+                isJoinedInsideRoom = true;
+                mySocketID = socketID;
+                $('#leaveRoom').text("Leave");
+                $('#leaveRoom').css('background-color', 'red');
+                $('#roomID').attr('disabled', true);
+                generate_message('You joined the room', 'self');
+                $('#chat-logs-input').css('display', 'revert');
+                $('.arrow').css('display', 'block');
+                sendMessageToAndroid("Joined");
+                if (!mobileCheck) {
+                    $(".arrow").show();
+                }
+            }
+        });
+
+        try {
+            navigator.mediaDevices.getUserMedia(constraints).then(stream => {
+                localVideo.srcObject = stream;
+                localStream = stream;
+                init();
+                //stream.getAudioTracks()[0].enabled = true;
+            }).catch(e => alert(`User Media Problem error ${e.name}`))
+        } catch (e) {
+            alert(`User Media Problem error ${e.name}`)
+        }
+
+        const arrow = document.querySelector('.arrow');
+
+        let coordinates = {
+            x: null,
+            y: null,
+        };
+
+        function updateArrowPosition(coordinates) {
+            let x = (((coordinates.x * document.body.clientWidth) / 100));
+            let y = (((coordinates.y * document.body.clientHeight) / 100));
+            arrow.style.left = `${x}px`;
+            arrow.style.top = `${y}px`;
+        }
+
+        document.addEventListener('mousemove', (event) => {
+            let mouseXPos = ((event.pageX * 100) / document.body.clientWidth);
+            let mouseYPos = ((event.pageY * 100) / document.body.clientHeight);
+            coordinates = {x: mouseXPos, y: mouseYPos};
+            if (!mobileCheck()) {
+                if (isJoinedInsideRoom === true) {
+                    socket.emit('updatePostion', {
+                        x: coordinates.x,
+                        y: coordinates.y,
+                        username: userName,
+                        room: roomID
+                    });
+                }
+            }
+        });
+
+        if (!mobileCheck()) {
+            socket.on('updatePostion', (data) => {
+                if (isJoinedInsideRoom === true) {
+                    $(".arrow").show();
+                    $('.arrow').css('display', 'block');
+                    updateArrowPosition(data);
+                    arrow.textContent = data.username;
+                } else {
+                    $('.arrow').css("display", "none");
+                }
+            });
+        }
+
+        // Close Chat when pressing ESC
+        $(document).keyup(function (e) {
+            if (e.key === "Escape") {
+                $('#chat-logs-input').css("display", "none")
+            }
+        });
+
+        $('div[alt="Open model from a url"]').remove();
+        $('div[alt="Export model"]').remove();
+        $('div[alt="Share model"]').remove();
+        $(".ov_toolbar_separator")[2].remove();
+
+        if (mobileCheck()) {
+            $(".arrow").hide();
+            $('.arrow').css("display", "none");
+            $("#main_viewer").removeClass("column");
+            $("#main_viewer").attr('style', 'height: unset');
+            $(".expandable").attr('style', 'cursor: none');
+            $(".header").prepend("<div id='buttons_id'; style='width: 100%; text-align: center'>" +
+                "" +
+                "<div style='margin: 0; padding: 0'>" +
+                "<button style='width: 100%' type='button' id='joinRoom' variant='contained' color='primary' onClick=\"joinRoomFunc()\" class='pure-material-button-contained'>Join</button>" +
+                "<button style='width: 100%; background-color: red; color: white' type='button' id='leaveRoom' variant='contained' color='primary' style='display: none' onClick=\"leaveRoomFunc()\">Leave</button>" +
+                "</div>" +
+                "" +
+                "</div>");
+            $('#chat').css("width", "100%");
+        } else {
+            $('div[alt="Settings panel"]').attr('style', 'display:flex');
+            $('div[alt="Settings panel"]').parent().append(
+                "<div id='buttons_id'; style='display:flex; align-items: center; float: right; padding: 10px; height: 18px'>" +
+                "<div style='text-align: end; margin: 0; padding: 0; float: right'>" +
+                "<button type='button' id='joinRoom' variant='contained' color='primary' onClick=\"joinRoomFunc()\" class='pure-material-button-contained'>Join</button>" +
+                "<button style='background-color: red; color: white' type='button' id='leaveRoom' variant='contained' color='primary' style='display: none' onClick=\"leaveRoomFunc()\">Leave</button>" +
+                "</div>" +
+                "</div>");
+        }
+
+        submitButton('chat-input', 'chat-send');
+        submitButton('name-field', 'Enter-btn');
+
+        $("#leaveRoom").hide();
+
+        function sendMessage() {
+            let msg = $("#chat-input").val();
+            if (msg != "") {
+                socket.emit('chat', roomID, userName, msg);
+                $("#chat-input").val("");
+            }
+            if (msg.trim() == '') {
+                return false;
+            }
+            generate_message(msg, 'self');
+            $('#chat-logs-input').css("display", "revert")
+            $("#chat-input").focus();
+        }
+
+        $("#chat-send").click(function (e) {
+            e.preventDefault();
+            sendMessage()
+            $("#chat-input").focus();
+        });
+
+        $("#chat-send").on('touchstart touchend', function (e) {
+            sendMessage()
+        });
+
+        $('#chat-logs-input').css("display", "none");
+
+        $("#chat-comment").click(function (e) {
+            e.preventDefault();
+            if ($('#chat-logs-input').css("display") == "none") {
+                $('#chat-logs-input').css("display", "revert")
+            } else {
+                $('#chat-logs-input').css("display", "none")
+            }
+            $("#chat-input").blur();
+        });
+
+    });
+
+</script>
+
+<script src="o3dv/utilities/treeview/treeview.0.2.js"></script>
+<script>
+    (function () {
+        new TreeView('#TreeView');
+        new TreeView('.MultiTree');
+    })();
+</script>
+
+</body>
+
+</html>

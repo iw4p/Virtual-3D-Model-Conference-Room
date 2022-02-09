@@ -1,0 +1,60 @@
+{
+	"name": "Virtual 3D Model Conference Room",
+	"description": "Virtual 3D Model Conference Room",
+	"version": "1.0.0",
+	"license": "MIT",
+	"devDependencies": {
+		"eslint": "^7.30.0",
+		"http-server": "^0.12.3"
+	},
+	"scripts": {
+		"start": "http-server website/ -S -C cert.pem -o -c-1"
+	},
+	"dependencies": {},
+	"eslintConfig": {
+		"env": {
+			"browser": true,
+			"es2021": true
+		},
+		"extends": "eslint:recommended",
+		"globals": {
+			"OV": "writable",
+			"$": "readonly",
+			"fflate": "readonly",
+			"Pickr": "readonly",
+			"THREE": "readonly",
+			"DracoDecoderModule": "readonly",
+			"rhino3dm": "readonly",
+			"IfcAPI": "readonly"
+		},
+		"parserOptions": {
+			"ecmaVersion": 12
+		},
+		"rules": {
+			"semi": "error",
+			"no-var": "error",
+			"guard-for-in": "error",
+			"no-use-before-define": "error",
+			"no-new": "error",
+			"no-new-object": "error",
+			"no-new-func": "error",
+			"no-array-constructor": "error",
+			"no-prototype-builtins": "error",
+			"no-eval": "error",
+			"no-useless-escape": "error",
+			"no-multiple-empty-lines": "error",
+			"comma-spacing": "error",
+			"prefer-arrow-callback": "error",
+			"quotes": [
+				"error",
+				"single"
+			],
+			"block-scoped-var": "error",
+			"no-loop-func": "error",
+			"no-undef": "error",
+			"no-extend-native": "error",
+			"eqeqeq": "error",
+			"no-unused-vars": "off"
+		}
+	}
+}

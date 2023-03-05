@@ -123,11 +123,11 @@ io.on('connection', (socket) => {
             }
 
         } else {
-            try{
+            try {
                 const newUser = users.filter(obj => (obj.socketid === socket_id) && (obj.room === room));
                 socket.to(newUser[0]['socketid']).emit('permissionDenied');
                 users.splice(users.findIndex(({socket_id}) => socket_id == newUser[0]['socketid']), 1);
-            }catch (e){
+            } catch (e) {
             }
 
         }

@@ -1,7 +1,5 @@
-OV.Sidebar = class
-{
-    constructor (parentDiv)
-    {
+OV.Sidebar = class {
+    constructor(parentDiv) {
         this.parentDiv = parentDiv;
         this.visible = true;
         this.titleDiv = null;
@@ -9,65 +7,58 @@ OV.Sidebar = class
         this.panels = [];
     }
 
-    AddPanel (panel)
-    {
-        this.panels.push (panel);
+    AddPanel(panel) {
+        this.panels.push(panel);
         return this.panels.length - 1;
     }
 
-    GetPanel (id)
-    {
+    GetPanel(id) {
         return this.panels[id];
     }
 
-    Show (panelId)
-    {
+    Show(panelId) {
         if (panelId !== null) {
             this.visible = true;
-            this.parentDiv.show ();
+            this.parentDiv.show();
             for (let id = 0; id < this.panels.length; id++) {
                 let panel = this.panels[id];
                 if (id === panelId) {
-                    panel.Show (true);
+                    panel.Show(true);
                 } else {
-                    panel.Show (false);
+                    panel.Show(false);
                 }
             }
         } else {
             this.visible = false;
-            this.parentDiv.hide ();
+            this.parentDiv.hide();
         }
     }
 
-    IsVisible ()
-    {
+    IsVisible() {
         return this.visible;
     }
 
-    GetVisiblePanelId ()
-    {
+    GetVisiblePanelId() {
         if (!this.visible) {
             return null;
         }
         for (let id = 0; id < this.panels.length; id++) {
-            if (this.panels[id].IsVisible ()) {
+            if (this.panels[id].IsVisible()) {
                 return id;
             }
         }
         return null;
     }
 
-    HidePopups ()
-    {
+    HidePopups() {
         for (let id = 0; id < this.panels.length; id++) {
-            this.panels[id].HidePopups ();
+            this.panels[id].HidePopups();
         }
     }
-    
-    Resize ()
-    {
+
+    Resize() {
         for (let id = 0; id < this.panels.length; id++) {
-            this.panels[id].Resize ();
+            this.panels[id].Resize();
         }
     }
 };

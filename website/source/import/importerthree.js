@@ -1,50 +1,39 @@
-OV.ThreeLoader = class
-{
-    constructor ()
-    {
+OV.ThreeLoader = class {
+    constructor() {
 
     }
 
-    GetExtension ()
-    {
+    GetExtension() {
         return null;
     }
 
-    GetExternalLibraries ()
-    {
+    GetExternalLibraries() {
         return null;
     }
 
-    CreateLoader (manager)
-    {
+    CreateLoader(manager) {
         return null;
     }
 
-    EnumerateMeshes (loadedObject, processor)
-    {
-        
+    EnumerateMeshes(loadedObject, processor) {
+
     }
 
-    GetUpDirection ()
-    {
+    GetUpDirection() {
         return null;
     }
 };
 
-OV.ThreeLoaderFbx = class extends OV.ThreeLoader
-{
-    constructor ()
-    {
-        super ();
+OV.ThreeLoaderFbx = class extends OV.ThreeLoader {
+    constructor() {
+        super();
     }
 
-    GetExtension ()
-    {
+    GetExtension() {
         return 'fbx';
     }
 
-    GetExternalLibraries ()
-    {
+    GetExternalLibraries() {
         return [
             'loaders/fflate.min.js',
             'three_loaders/TGALoader.js',
@@ -52,99 +41,83 @@ OV.ThreeLoaderFbx = class extends OV.ThreeLoader
         ];
     }
 
-    CreateLoader (manager)
-    {
-        manager.addHandler (/\.tga$/i, new THREE.TGALoader (manager));
-        return new THREE.FBXLoader (manager);
+    CreateLoader(manager) {
+        manager.addHandler(/\.tga$/i, new THREE.TGALoader(manager));
+        return new THREE.FBXLoader(manager);
     }
 
-    EnumerateMeshes (loadedObject, processor)
-    {
-        loadedObject.traverse ((child) => {
+    EnumerateMeshes(loadedObject, processor) {
+        loadedObject.traverse((child) => {
             if (child.isMesh) {
-                processor (child);
+                processor(child);
             }
         });
     }
 
-    GetUpDirection ()
-    {
+    GetUpDirection() {
         return OV.Direction.Y;
     }
 };
 
-OV.ThreeLoaderDae = class extends OV.ThreeLoader
-{
-    constructor ()
-    {
-        super ();
+OV.ThreeLoaderDae = class extends OV.ThreeLoader {
+    constructor() {
+        super();
     }
 
-    GetExtension ()
-    {
+    GetExtension() {
         return 'dae';
     }
 
-    GetExternalLibraries ()
-    {
+    GetExternalLibraries() {
         return [
             'three_loaders/TGALoader.js',
             'three_loaders/ColladaLoader.js'
         ];
     }
 
-    CreateLoader (manager)
-    {
-        manager.addHandler (/\.tga$/i, new THREE.TGALoader (manager));
-        return new THREE.ColladaLoader (manager);
+    CreateLoader(manager) {
+        manager.addHandler(/\.tga$/i, new THREE.TGALoader(manager));
+        return new THREE.ColladaLoader(manager);
     }
 
-    EnumerateMeshes (loadedObject, processor)
-    {
-        loadedObject.scene.traverse ((child) => {
+    EnumerateMeshes(loadedObject, processor) {
+        loadedObject.scene.traverse((child) => {
             if (child.isMesh) {
-                processor (child);
+                processor(child);
             }
         });
     }
 
-    GetUpDirection ()
-    {
+    GetUpDirection() {
         return OV.Direction.Y;
     }
 };
 
-OV.ThreeLoaderVrml = class extends OV.ThreeLoader
-{
-    constructor ()
-    {
-        super ();
+OV.ThreeLoaderVrml = class extends OV.ThreeLoader {
+    constructor() {
+        super();
     }
 
-    GetExtension ()
-    {
+    GetExtension() {
         return 'wrl';
     }
 
-    GetExternalLibraries ()
-    {
+    GetExternalLibraries() {
         return [
             'three_loaders/chevrotain.min.js',
             'three_loaders/VRMLLoader.js'
         ];
     }
 
-    CreateLoader (manager)
-    {
-        return new THREE.VRMLLoader (manager);
+    CreateLoader(manager) {
+        return new THREE.VRMLLoader(manager);
     }
 
-    EnumerateMeshes (loadedObject, processor)
-    {
-        loadedObject.traverse ((child) => {
+    EnumerateMeshes(loadedObject, processor) {
+        loadedObject.traverse((child) => {
             if (child.isMesh) {
                 let needToProcess = true;
-                if (Array.isArray (child.material)) {
+                if (Array.isArray(child.material)) {
                     for (let i = 0; i < child.material.length; i++) {
                         if (child.material[i].side === THREE.BackSide) {
                             needToProcess = false;
@@ -155,163 +128,145 @@ OV.ThreeLoaderVrml = class extends OV.ThreeLoader
                     needToProcess = (child.material.side !== THREE.BackSide);
                 }
                 if (needToProcess) {
-                    processor (child);
+                    processor(child);
                 }
             }
         });
     }
 
-    GetUpDirection ()
-    {
+    GetUpDirection() {
         return OV.Direction.Y;
     }
 };
 
-OV.ThreeLoader3mf = class extends OV.ThreeLoader
-{
-    constructor ()
-    {
-        super ();
+OV.ThreeLoader3mf = class extends OV.ThreeLoader {
+    constructor() {
+        super();
     }
 
-    GetExtension ()
-    {
+    GetExtension() {
         return '3mf';
     }
 
-    GetExternalLibraries ()
-    {
+    GetExternalLibraries() {
         return [
             'loaders/fflate.min.js',
             'three_loaders/3MFLoader.js'
         ];
     }
 
-    CreateLoader (manager)
-    {
-        return new THREE.ThreeMFLoader (manager);
+    CreateLoader(manager) {
+        return new THREE.ThreeMFLoader(manager);
     }
 
-    EnumerateMeshes (loadedObject, processor)
-    {
-        loadedObject.traverse ((child) => {
+    EnumerateMeshes(loadedObject, processor) {
+        loadedObject.traverse((child) => {
             if (child.isMesh) {
-                processor (child);
+                processor(child);
             }
         });
     }
 
-    GetUpDirection ()
-    {
+    GetUpDirection() {
         return OV.Direction.Z;
     }
 };
 
-OV.ImporterThree = class extends OV.ImporterBase
-{
-    constructor ()
-    {
-        super ();
+OV.ImporterThree = class extends OV.ImporterBase {
+    constructor() {
+        super();
         this.loaders = [
-            new OV.ThreeLoaderFbx (),
-            new OV.ThreeLoaderDae (),
-            new OV.ThreeLoaderVrml (),
-            new OV.ThreeLoader3mf ()
+            new OV.ThreeLoaderFbx(),
+            new OV.ThreeLoaderDae(),
+            new OV.ThreeLoaderVrml(),
+            new OV.ThreeLoader3mf()
         ];
     }
 
-    CanImportExtension (extension)
-    {
-        for (let i = 0; i < this.loaders.length; i++)  {
+    CanImportExtension(extension) {
+        for (let i = 0; i < this.loaders.length; i++) {
             let loader = this.loaders[i];
-            if (loader.GetExtension () === extension) {
+            if (loader.GetExtension() === extension) {
                 return true;
             }
         }
         return false;
     }
 
-    GetUpDirection ()
-    {
-        return this.loader.GetUpDirection ();
-    }    
-    
-    ClearContent ()
-    {
+    GetUpDirection() {
+        return this.loader.GetUpDirection();
+    }
+
+    ClearContent() {
         this.loader = null;
     }
 
-    ResetContent ()
-    {
+    ResetContent() {
         this.loader = null;
     }
 
-    ImportContent (fileContent, onFinish)
-    {
-        async function LoadLibraries (libraries, onFinish, onError)
-        {
+    ImportContent(fileContent, onFinish) {
+        async function LoadLibraries(libraries, onFinish, onError) {
             try {
                 for (let i = 0; i < libraries.length; i++) {
-                    await OV.LoadExternalLibrary (libraries[i]);
+                    await OV.LoadExternalLibrary(libraries[i]);
                 }
             } catch (err) {
-                onError ();
+                onError();
             }
-            onFinish ();
+            onFinish();
         }
 
-        this.loader = this.FindLoader ();
+        this.loader = this.FindLoader();
         if (this.loader === null) {
-            onFinish ();
-            return;
-        }
-        
-        const libraries = this.loader.GetExternalLibraries ();
-        if (libraries === null) {
-            onFinish ();
+            onFinish();
             return;
         }
 
-        LoadLibraries (libraries, () => {
-            this.LoadModel (fileContent, onFinish);    
+        const libraries = this.loader.GetExternalLibraries();
+        if (libraries === null) {
+            onFinish();
+            return;
+        }
+
+        LoadLibraries(libraries, () => {
+            this.LoadModel(fileContent, onFinish);
         }, () => {
-            onFinish ();
+            onFinish();
         });
     }
 
-    FindLoader ()
-    {
-        for (let i = 0; i < this.loaders.length; i++)  {
+    FindLoader() {
+        for (let i = 0; i < this.loaders.length; i++) {
             let loader = this.loaders[i];
-            if (loader.GetExtension () === this.extension) {
+            if (loader.GetExtension() === this.extension) {
                 return loader;
             }
         }
         return null;
     }
 
-    LoadModel (fileContent, onFinish)
-    {
+    LoadModel(fileContent, onFinish) {
         let loadedObject = null;
         let externalFileNames = {};
-        let loadingManager = new THREE.LoadingManager (() => {
+        let loadingManager = new THREE.LoadingManager(() => {
             if (loadedObject !== null) {
-                this.OnThreeObjectsLoaded (loadedObject, externalFileNames, onFinish);
+                this.OnThreeObjectsLoaded(loadedObject, externalFileNames, onFinish);
             }
         });
 
-        const mainFileUrl = OV.CreateObjectUrl (fileContent);
-        loadingManager.setURLModifier ((url) => {
+        const mainFileUrl = OV.CreateObjectUrl(fileContent);
+        loadingManager.setURLModifier((url) => {
             if (url === mainFileUrl) {
                 return url;
             }
-            if (url.startsWith ('blob:')) {
-                const name = OV.GetFileName (url);
-                const extension = OV.GetFileExtension (url);
+            if (url.startsWith('blob:')) {
+                const name = OV.GetFileName(url);
+                const extension = OV.GetFileExtension(url);
                 if (extension.length > 0) {
-                    const buffer = this.callbacks.getFileBuffer (url);
+                    const buffer = this.callbacks.getFileBuffer(url);
                     if (buffer !== null) {
-                        let objectUrl = OV.CreateObjectUrl (buffer);
+                        let objectUrl = OV.CreateObjectUrl(buffer);
                         externalFileNames[objectUrl] = name;
                         return objectUrl;
                     }
@@ -320,51 +275,46 @@ OV.ImporterThree = class extends OV.ImporterBase
             return url;
         });
 
-        const threeLoader = this.loader.CreateLoader (loadingManager);
+        const threeLoader = this.loader.CreateLoader(loadingManager);
         if (threeLoader === null) {
-            onFinish ();
+            onFinish();
             return;
         }
 
-        threeLoader.load (mainFileUrl,
+        threeLoader.load(mainFileUrl,
             (object) => {
                 loadedObject = object;
             },
             () => {
             },
             (err) => {
-                this.SetError (err);
-                onFinish ();
+                this.SetError(err);
+                onFinish();
             }
         );
     }
 
-    OnThreeObjectsLoaded (loadedObject, externalFileNames, onFinish)
-    {
-        function ConvertThreeMaterialToMaterial (threeMaterial, externalFileNames)
-        {
-            function SetColor (color, threeColor)
-            {
-                color.Set (
-                    parseInt (threeColor.r * 255.0, 10),
-                    parseInt (threeColor.g * 255.0, 10),
-                    parseInt (threeColor.b * 255.0, 10)
+    OnThreeObjectsLoaded(loadedObject, externalFileNames, onFinish) {
+        function ConvertThreeMaterialToMaterial(threeMaterial, externalFileNames) {
+            function SetColor(color, threeColor) {
+                color.Set(
+                    parseInt(threeColor.r * 255.0, 10),
+                    parseInt(threeColor.g * 255.0, 10),
+                    parseInt(threeColor.b * 255.0, 10)
                 );
             }
-        
-            function CreateTexture (threeMap, externalFileNames)
-            {
-                function GetDataUrl (img)
-                {
+
+            function CreateTexture(threeMap, externalFileNames) {
+                function GetDataUrl(img) {
                     if (img.data !== undefined && img.data !== null) {
-                        let imageData = new ImageData (img.width, img.height);
+                        let imageData = new ImageData(img.width, img.height);
                         let imageSize = img.width * img.height * 4;
                         for (let i = 0; i < imageSize; i++) {
                             imageData.data[i] = img.data[i];
-                        }                        
-                        return THREE.ImageUtils.getDataURL (imageData);
+                        }
+                        return THREE.ImageUtils.getDataURL(imageData);
                     } else {
-                        return THREE.ImageUtils.getDataURL (threeMap.image);
+                        return THREE.ImageUtils.getDataURL(threeMap.image);
                     }
                 }
 
@@ -377,12 +327,12 @@ OV.ImporterThree = class extends OV.ImporterBase
                 }
 
                 try {
-                    const dataUrl = GetDataUrl (threeMap.image);
-                    const base64Buffer = OV.Base64DataURIToArrayBuffer (dataUrl);
-                    let texture = new OV.TextureMap ();
+                    const dataUrl = GetDataUrl(threeMap.image);
+                    const base64Buffer = OV.Base64DataURIToArrayBuffer(dataUrl);
+                    let texture = new OV.TextureMap();
                     let textureName = externalFileNames[threeMap.image.src];
                     if (textureName === undefined) {
-                        textureName = 'Embedded_' + threeMap.id.toString () + '.' + OV.GetFileExtensionFromMimeType (base64Buffer.mimeType);
+                        textureName = 'Embedded_' + threeMap.id.toString() + '.' + OV.GetFileExtensionFromMimeType(base64Buffer.mimeType);
                     }
                     texture.name = textureName;
                     texture.url = dataUrl;
@@ -398,77 +348,76 @@ OV.ImporterThree = class extends OV.ImporterBase
                 }
             }
 
-            let material = new OV.Material (OV.MaterialType.Phong);
+            let material = new OV.Material(OV.MaterialType.Phong);
             material.name = threeMaterial.name;
-            SetColor (material.color, threeMaterial.color);
+            SetColor(material.color, threeMaterial.color);
             material.opacity = threeMaterial.opacity;
             material.transparent = threeMaterial.transparent;
             material.alphaTest = threeMaterial.alphaTest;
             if (threeMaterial.type === 'MeshPhongMaterial') {
-                SetColor (material.specular, threeMaterial.specular);
+                SetColor(material.specular, threeMaterial.specular);
                 material.shininess = threeMaterial.shininess / 100.0;
             }
-            material.diffuseMap = CreateTexture (threeMaterial.map, externalFileNames);
-            material.normalMap = CreateTexture (threeMaterial.normalMap, externalFileNames);
-            material.bumpMap = CreateTexture (threeMaterial.bumpMap, externalFileNames);
+            material.diffuseMap = CreateTexture(threeMaterial.map, externalFileNames);
+            material.normalMap = CreateTexture(threeMaterial.normalMap, externalFileNames);
+            material.bumpMap = CreateTexture(threeMaterial.bumpMap, externalFileNames);
 
             return material;
         }
 
-        function FindMatchingMaterialIndex (model, threeMaterial, materialIdToIndex, externalFileNames)
-        {
+        function FindMatchingMaterialIndex(model, threeMaterial, materialIdToIndex, externalFileNames) {
             let index = materialIdToIndex[threeMaterial.id];
             if (index !== undefined) {
                 return index;
             }
-            let material = ConvertThreeMaterialToMaterial (threeMaterial, externalFileNames);
-            index = model.AddMaterial (material);
+            let material = ConvertThreeMaterialToMaterial(threeMaterial, externalFileNames);
+            index = model.AddMaterial(material);
             materialIdToIndex[threeMaterial.id] = index;
             return index;
         }
 
         let materialIdToIndex = {};
-        this.loader.EnumerateMeshes (loadedObject, (child) => {
+        this.loader.EnumerateMeshes(loadedObject, (child) => {
             let materialIndex = null;
             let mesh = null;
-            if (Array.isArray (child.material)) {
-                mesh = OV.ConvertThreeGeometryToMesh (child.geometry, null);
+            if (Array.isArray(child.material)) {
+                mesh = OV.ConvertThreeGeometryToMesh(child.geometry, null);
                 if (child.geometry.attributes.color === undefined || child.geometry.attributes.color === null) {
                     let materialIndices = [];
                     for (let i = 0; i < child.material.length; i++) {
                         let material = child.material[i];
-                        materialIndices.push (FindMatchingMaterialIndex (this.model, material, materialIdToIndex, externalFileNames));
+                        materialIndices.push(FindMatchingMaterialIndex(this.model, material, materialIdToIndex, externalFileNames));
                     }
                     for (let i = 0; i < child.geometry.groups.length; i++) {
                         let group = child.geometry.groups[i];
                         for (let j = group.start / 3; j < group.start / 3 + group.count / 3; j++) {
-                            let triangle = mesh.GetTriangle (j);
-                            triangle.SetMaterial (materialIndices[group.materialIndex]);
+                            let triangle = mesh.GetTriangle(j);
+                            triangle.SetMaterial(materialIndices[group.materialIndex]);
                         }
                     }
                 }
             } else {
-                materialIndex = FindMatchingMaterialIndex (this.model, child.material, materialIdToIndex, externalFileNames);
-                mesh = OV.ConvertThreeGeometryToMesh (child.geometry, materialIndex);
+                materialIndex = FindMatchingMaterialIndex(this.model, child.material, materialIdToIndex, externalFileNames);
+                mesh = OV.ConvertThreeGeometryToMesh(child.geometry, materialIndex);
             }
             if (child.name !== undefined && child.name !== null) {
-                mesh.SetName (child.name);
+                mesh.SetName(child.name);
             }
-            child.updateWorldMatrix (true, true);
+            child.updateWorldMatrix(true, true);
             if (child.matrixWorld !== undefined && child.matrixWorld !== null) {
-                const matrix = new OV.Matrix (child.matrixWorld.elements);
-                const transformation = new OV.Transformation (matrix);
-                const determinant = matrix.Determinant ();
-                const mirrorByX = OV.IsNegative (determinant);
-                OV.TransformMesh (mesh, transformation);
+                const matrix = new OV.Matrix(child.matrixWorld.elements);
+                const transformation = new OV.Transformation(matrix);
+                const determinant = matrix.Determinant();
+                const mirrorByX = OV.IsNegative(determinant);
+                OV.TransformMesh(mesh, transformation);
                 if (mirrorByX) {
-                    OV.FlipMeshTrianglesOrientation (mesh);
+                    OV.FlipMeshTrianglesOrientation(mesh);
                 }
             }
-            this.model.AddMesh (mesh);
-            child.geometry.dispose ();
+            this.model.AddMesh(mesh);
+            child.geometry.dispose();
         });
 
-        onFinish ();
+        onFinish();
     }
 };

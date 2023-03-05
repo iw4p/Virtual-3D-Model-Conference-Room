@@ -1,34 +1,30 @@
-OV.ExporterOff = class extends OV.ExporterBase
-{
-	constructor ()
-	{
-		super ();
-	}
+OV.ExporterOff = class extends OV.ExporterBase {
+    constructor() {
+        super();
+    }
 
-    CanExport (format, extension)
-    {
+    CanExport(format, extension) {
         return format === OV.FileFormat.Text && extension === 'off';
     }
-    
-	ExportContent (model, format, files, onFinish)
-	{
-		let offFile = new OV.ExportedFile ('model.off');
-		files.push (offFile);
 
-		let offWriter = new OV.TextWriter ();
-		offWriter.WriteLine ('OFF');
-		offWriter.WriteArrayLine ([model.VertexCount (), model.TriangleCount (), 0]);
+    ExportContent(model, format, files, onFinish) {
+        let offFile = new OV.ExportedFile('model.off');
+        files.push(offFile);
 
-		OV.EnumerateModelVerticesAndTriangles (model, {
-			onVertex : function (x, y, z) {
-				offWriter.WriteArrayLine ([x, y, z]);
-			},
-			onTriangle : function (v0, v1, v2) {
-				offWriter.WriteArrayLine ([3, v0, v1, v2]);
-			}
-		});
+        let offWriter = new OV.TextWriter();
+        offWriter.WriteLine('OFF');
+        offWriter.WriteArrayLine([model.VertexCount(), model.TriangleCount(), 0]);
 
-		offFile.SetTextContent (offWriter.GetText ());
-		onFinish ();
-	}   
+        OV.EnumerateModelVerticesAndTriangles(model, {
+            onVertex: function (x, y, z) {
+                offWriter.WriteArrayLine([x, y, z]);
+            },
+            onTriangle: function (v0, v1, v2) {
+                offWriter.WriteArrayLine([3, v0, v1, v2]);
+            }
+        });
+
+        offFile.SetTextContent(offWriter.GetText());
+        onFinish();
+    }
 };

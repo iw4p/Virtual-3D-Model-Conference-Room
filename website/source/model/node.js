@@ -1,56 +1,46 @@
-OV.Node = class
-{
-    constructor ()
-    {
+OV.Node = class {
+    constructor() {
         this.parent = null;
         this.name = '';
         this.childNodes = [];
         this.meshIndices = [];
     }
 
-    GetParent ()
-    {
+    GetParent() {
         return this.parent;
     }
 
-    GetName ()
-    {
+    GetName() {
         return this.name;
     }
-    
-    SetName (name)
-    {
+
+    SetName(name) {
         this.name = name;
     }
 
-    AddChildNode (node)
-    {
+    AddChildNode(node) {
         node.parent = this;
-        this.childNodes.push (node);
+        this.childNodes.push(node);
         return this.childNodes.length - 1;
     }
 
-    GetChildNodes ()
-    {
+    GetChildNodes() {
         return this.childNodes;
     }
 
-    AddMeshIndex (index)
-    {
-        this.meshIndices.push (index);
+    AddMeshIndex(index) {
+        this.meshIndices.push(index);
         return this.meshIndices.length - 1;
     }
 
-    GetMeshIndices ()
-    {
+    GetMeshIndices() {
         return this.meshIndices;
     }
 
-    EnumerateChildren (processor)
-    {
+    EnumerateChildren(processor) {
         for (const childNode of this.childNodes) {
-            processor (childNode);
-            childNode.EnumerateChildren (processor);
+            processor(childNode);
+            childNode.EnumerateChildren(processor);
         }
     }
 };

@@ -1,86 +1,85 @@
+// Call Funcs
 
-        // Call Funcs
+function answerCallFunc(id) {
+    callAccepted = true;
 
-        function answerCallFunc(id) {
-            callAccepted = true;
+    const peer = new SimplePeer({initiator: false, trickle: false, stream});
 
-            const peer = new SimplePeer({initiator: false, trickle: false, stream});
+    peer.on('signal', (data) => {
+        socket.emit('answercall', {signal: data, to: call.from});
+        $('#endCall').show();
+    });
 
-            peer.on('signal', (data) => {
-                socket.emit('answercall', {signal: data, to: call.from});
-                $('#endCall').show();
-            });
+    peer.on('stream', (currentStream) => {
+        document.getElementById('userVideo').srcObject = currentStream;
+    });
 
-            peer.on('stream', (currentStream) => {
-                document.getElementById('userVideo').srcObject = currentStream;
-            });
+    peer.signal(call.signal);
 
-            peer.signal(call.signal);
+    // connectionRef.current = peer;
+    connectionRef = peer;
+}
 
-            // connectionRef.current = peer;
-            connectionRef = peer;
-        }
+function callUser(id) {
 
-        function callUser(id) {
+    id = $('#callID').val();
+    socket.calluserID = id;
 
-            id = $('#callID').val();
-            socket.calluserID = id;
+    const peer = new SimplePeer({initiator: true, trickle: false, stream});
 
-            const peer = new SimplePeer({initiator: true, trickle: false, stream});
+    peer.on('signal', (data) => {
+        me = socket.id;
+        socket.emit('calluser', {userToCall: id, signalData: data, from: me, name});
+        $('#endCall').show();
+    });
 
-            peer.on('signal', (data) => {
-                me = socket.id;
-                socket.emit('calluser', {userToCall: id, signalData: data, from: me, name});
-                $('#endCall').show();
-            });
+    peer.on('stream', (currentStream) => {
+        document.getElementById('userVideo').srcObject = currentStream;
+    });
 
-            peer.on('stream', (currentStream) => {
-                document.getElementById('userVideo').srcObject = currentStream;
-            });
+    socket.on('callaccepted', (signal) => {
+        callAccepted = true;
+        peer.signal(signal);
+    });
 
-            socket.on('callaccepted', (signal) => {
-                callAccepted = true;
-                peer.signal(signal);
-            });
+    // connectionRef.current = peer;
+    connectionRef = peer;
+}
 
-            // connectionRef.current = peer;
-            connectionRef = peer;
-        }
-
-        function leaveCall() {
-            $('#answerCall').hide();
-            $('#endCall').hide();
-
-
-            callEnded = true;
-            // connectionRef.current.destroy();
-            connectionRef.destroy();
-
-            window.location.reload(); //reload and change userID
-        }
+function leaveCall() {
+    $('#answerCall').hide();
+    $('#endCall').hide();
 
 
-        // Voice Call Function
+    callEnded = true;
+    // connectionRef.current.destroy();
+    connectionRef.destroy();
 
-        /*
-        navigator.mediaDevices.getUserMedia({video: false, audio: true})
-            .then((currentStream) => {
-                stream = currentStream;
-                document.getElementById("myVideo").srcObject = currentStream;
-            });
-        */
+    window.location.reload(); //reload and change userID
+}
 
-                
-        // socket.on('me', (id) => setMe(id));
-        //socket.on('mee', function(id) {
-        //    me = id;
-        //});
 
-        socket.on('calluser', ({from, name: callerName, signal}) => {
-            call = {isReceivedCall: true, from, name: callerName, signal};
-            $('#answerCall').show();
-        });
+// Voice Call Function
 
-        // $(document).ready(function(){
+/*
+navigator.mediaDevices.getUserMedia({video: false, audio: true})
+    .then((currentStream) => {
+        stream = currentStream;
+        document.getElementById("myVideo").srcObject = currentStream;
+    });
+*/
 
-        // });
+
+// socket.on('me', (id) => setMe(id));
+//socket.on('mee', function(id) {
+//    me = id;
+//});
+
+socket.on('calluser', ({from, name: callerName, signal}) => {
+    call = {isReceivedCall: true, from, name: callerName, signal};
+    $('#answerCall').show();
+});
+
+// $(document).ready(function(){
+
+// });

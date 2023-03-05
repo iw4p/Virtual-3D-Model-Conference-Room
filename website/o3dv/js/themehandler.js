@@ -1,5 +1,5 @@
 OV.ThemeHandler = class {
-    constructor () {
+    constructor() {
         this.css = {
             '--ov_foreground_color': {},
             '--ov_background_color': {},
@@ -24,18 +24,17 @@ OV.ThemeHandler = class {
             '--ov_border_color': {},
             '--ov_shadow': {}
         };
-        let root = document.querySelector (':root');
-        let style = window.getComputedStyle (root);
+        let root = document.querySelector(':root');
+        let style = window.getComputedStyle(root);
         for (let property in this.css) {
-            if (Object.prototype.hasOwnProperty.call (this.css, property)) {
-                this.css[property].light = style.getPropertyValue (property);
-                this.css[property].dark = style.getPropertyValue (property + '_dark');
+            if (Object.prototype.hasOwnProperty.call(this.css, property)) {
+                this.css[property].light = style.getPropertyValue(property);
+                this.css[property].dark = style.getPropertyValue(property + '_dark');
             }
         }
     }
 
-    SwitchTheme (themeId)
-    {
+    SwitchTheme(themeId) {
         let themeName = null;
         if (themeId === OV.Theme.Light) {
             themeName = 'light';
@@ -45,12 +44,12 @@ OV.ThemeHandler = class {
             return;
         }
 
-        let root = document.querySelector (':root');
+        let root = document.querySelector(':root');
         for (let property in this.css) {
-            if (Object.prototype.hasOwnProperty.call (this.css, property)) {
+            if (Object.prototype.hasOwnProperty.call(this.css, property)) {
                 let value = this.css[property][themeName];
                 if (value !== undefined) {
-                    root.style.setProperty (property, value);
+                    root.style.setProperty(property, value);
                 }
             }
         }

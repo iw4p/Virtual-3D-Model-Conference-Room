@@ -14,7 +14,7 @@ function copyURL() {
 }
 
 function enterClicked() {
-    if (modelName == "" || modelName == undefined){
+    if (modelName == "" || modelName == undefined) {
         modelName = 'Tester_Case';
     }
     let viewBtn = document.querySelector('#joinRoom');
@@ -34,7 +34,7 @@ function enterClicked() {
 }
 
 function enterClicked1() {
-    if (modelName == "" || modelName == undefined){
+    if (modelName == "" || modelName == undefined) {
         modelName = 'Tester_Case';
     }
     let viewBtn = document.querySelector('#joinRoom');
@@ -103,6 +103,7 @@ function joinRoomFunc1() {
         OV.ShowSocketDialog();
     }
 }
+
 function leaveRoomFunc() {
     socket.emit('leave', roomID, userName);
     isJoinedInsideRoom = false;

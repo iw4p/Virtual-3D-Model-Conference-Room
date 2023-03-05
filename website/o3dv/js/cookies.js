@@ -1,74 +1,63 @@
-OV.CookieHandler = class
-{
-    constructor ()
-    {
+OV.CookieHandler = class {
+    constructor() {
         this.expirationDays = 365;
     }
 
-    ClearVal (key)
-    {
-        this.SetStringVal (key, '');
+    ClearVal(key) {
+        this.SetStringVal(key, '');
     }
 
-    SetStringVal (key, value)
-    {
-		let date = new Date ();
-		date.setTime (date.getTime () + (this.expirationDays * 24 * 60 * 60 * 1000));
-		document.cookie = key + '=' + value + '; expires=' + date.toUTCString () + ';';
+    SetStringVal(key, value) {
+        let date = new Date();
+        date.setTime(date.getTime() + (this.expirationDays * 24 * 60 * 60 * 1000));
+        document.cookie = key + '=' + value + '; expires=' + date.toUTCString() + ';';
     }
 
-    GetStringVal (key, defVal)
-    {
-		let cookie = decodeURIComponent (document.cookie);
-        let cookieParts = cookie.split (';');
+    GetStringVal(key, defVal) {
+        let cookie = decodeURIComponent(document.cookie);
+        let cookieParts = cookie.split(';');
         for (let i = 0; i < cookieParts.length; i++) {
-            let currentCookie = cookieParts[i].trim ();
-            if (currentCookie.startsWith (key + '=')) {
-                return currentCookie.substr (key.length + 1);
+            let currentCookie = cookieParts[i].trim();
+            if (currentCookie.startsWith(key + '=')) {
+                return currentCookie.substr(key.length + 1);
             }
         }
         return defVal;
     }
 
-    GetBoolVal (key, defVal)
-    {
-        let stringVal = this.GetStringVal (key, null);
+    GetBoolVal(key, defVal) {
+        let stringVal = this.GetStringVal(key, null);
         if (stringVal === null) {
             return defVal;
         }
         return stringVal === 'true' ? true : false;
     }
 
-    SetBoolVal (key, value)
-    {
-        this.SetStringVal (key, value ? 'true' : 'false');
-    }    
+    SetBoolVal(key, value) {
+        this.SetStringVal(key, value ? 'true' : 'false');
+    }
 
-    GetIntVal (key, defVal)
-    {
-        let stringVal = this.GetStringVal (key, null);
+    GetIntVal(key, defVal) {
+        let stringVal = this.GetStringVal(key, null);
         if (stringVal === null) {
             return defVal;
         }
-        return parseInt (stringVal, 10);
+        return parseInt(stringVal, 10);
     }
 
-    SetIntVal (key, value)
-    {
-        this.SetStringVal (key, value.toString ());
+    SetIntVal(key, value) {
+        this.SetStringVal(key, value.toString());
     }
 
-    GetColorVal (key, defVal)
-    {
-        let stringVal = this.GetStringVal (key, null);
+    GetColorVal(key, defVal) {
+        let stringVal = this.GetStringVal(key, null);
         if (stringVal === null) {
             return defVal;
         }
-        return OV.ParameterConverter.StringToColor (stringVal);
+        return OV.ParameterConverter.StringToColor(stringVal);
     }
 
-    SetColorVal (key, value)
-    {
-        this.SetStringVal (key, OV.ParameterConverter.ColorToString (value));
-    }    
+    SetColorVal(key, value) {
+        this.SetStringVal(key, OV.ParameterConverter.ColorToString(value));
+    }
 };

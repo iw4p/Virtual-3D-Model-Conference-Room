@@ -5,7 +5,7 @@ let modelName = 'Tester_Case';
 
 function getPaging(name) {
     modelName = name;
-    if (isJoinedInsideRoom){
+    if (isJoinedInsideRoom) {
         socket.emit('loadModel', roomID, modelName);
     }
     website_.LoadModel(modelName);

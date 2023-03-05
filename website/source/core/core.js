@@ -1,10 +1,7 @@
 OV =
-{
+    {};
 
-};
-
-OV.ValueOrDefault = function (val, def)
-{
+OV.ValueOrDefault = function (val, def) {
     if (val === undefined || val === null) {
         return def;
     }
